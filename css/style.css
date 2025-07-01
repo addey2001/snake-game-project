@@ -7,9 +7,6 @@ body {
     padding: 0;
 }
 
-
-
-
 #game-container {
     width: 200px ;
     margin: 40px auto;
@@ -55,5 +52,26 @@ h1 {
 }
 #board {
     display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
     justify-content: center;
+    max-width: 100%;
+    width: 600px;
+    height: 600px;
+}
+#board div {
+    border: 1px solid rgba(211, 211, 211, 0.993);
+    display: inline-block;
+}
+.cell {
+    border: 1px solid #23232300;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0) ;
+}
+.snake {
+    background: rgba(182,205,50);
+}
+
+.food {
+    background: rebeccapurple;
 }
