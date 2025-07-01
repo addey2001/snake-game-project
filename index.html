@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script defer src="./js/app.js"></script>
+  <title>Snake game</title>
+  <style>
+    body {
+    font-family: Arial, sans-serif;
+    background:  rgba(47, 0, 255, 0.829);
+    color: rgba(255, 255, 255, 0.678);
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+#game-container {
+    width: 200px ;
+    margin: 40px auto;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.541);
+    border-radius:12px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.5);
+
+}
+
+h1 {
+    margin-top: 0 auto;
+    color: rgba(202, 205, 50, 0.932);
+    letter-spacing: 2px;
+}
+
+#controls {
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#score, #time {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 0 12px;
+}
+#playButton {
+    padding: 8px 32px;
+    font-size: 1.1em;
+    background: rgb(182, 205, 50);
+    color: #181818;
+    border: none;
+    border-radius: 5px;
+   
+
+}
+#playButton:disabled {
+    background: #888;
+    color: snow;
+    cursor: not-allowed;
+}
+#board {
+    display: grid;
+    height: 600px;
+    width: 600px;
+    background: #101010;
+    border: 2px solid #444444;
+    margin: 0 auto 16px auto;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.5)
+}
+#board div {
+    border: 1px solid rgba(211, 211, 211, 0.993);
+    display: inline-block;
+}
+
+.cell {
+    border: 1px solid #23232300;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0) ;
+}
+.snake {
+    background: rgba(182,205,50);
+}
+
+.food {
+    background: rebeccapurple;
+}
+
+  </style>
+</head>
+<body>
+    <div id='game-container'></div>
+  <h1>Snake Game</h1>
+  <div id="controls">
+    <span id="score">score: 0</span>
+    <button id ="playButton">start</button>
+    <span id = "time">time: 0</span>
+  </div>
+  <div id="board"></div>
+
+</body>
+</html>
