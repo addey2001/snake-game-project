@@ -10,7 +10,6 @@ const board = document.getElementById('board')
 const startPosition = [188,189,190]
 
 //variables 
-let currentPosition = startPosition
 let snakeLength = 1 
 let snakespeed = 1; // ms per move 
 let foodPosition = null;
@@ -24,9 +23,12 @@ let timeIntervalId = null
 
 //function
 function addSnake() {
-   const cell = cellElements[currentPosition]
-   cell.classList.add('snake') // this adds the class 'snake' to the cell that is currently being used by the snake})
+snake.forEach(idx => cellElements[idx].classList.add('snake')) //iteratiing over array calling it 'snake' adding its classList to the cell
+
 }
+
+
+
 function createBoard () {
     for( let i = 0; i < cellCount; i++) { // used a loop 
     const cell = document.createElement('div'); // created a new div for cells
@@ -41,6 +43,13 @@ function createBoard () {
  }}
 ;
 
+
+function removeSnake() {
+    snake.forEach(idx => cellElements[idx].classList.remove('snake')) //iteratiing over array calling it 'snake' adding its classList to the cell
+}
+
+
+
 function placefoodRdm() {
    let idx
     idx = Math.floor(Math.random() * cellCount) // allows a random index to be found and this random index is used to determine where the food is placed
@@ -51,45 +60,82 @@ function placefoodRdm() {
     }
 
 
+
+
 function updateBoard() {
-    cellElements.forEach(cell => cell.className = 'cell') // this resets each cell className to cell, and makes sure its in a default state removing any other classes that may have been there previously
-snake.forEach(idx => cellElements[idx].classList.add('snake')) //iteratiing over array calling it 'snake' adding its classList to the cell
-if (typeof foodPosition === 'number') {
-    cellElements[foodPosition].classList.add('food')// this adds the name 'food' to each area where the food is randomly place onn the game board 
+    addSnake()
+    removeSnake()
 }
 
+
+
+ function init() {
+    createBoard();
+    addSnake();
+    placefoodRdm();
+    updateBoard();
 }
 
 function moveSnake(event) {
-    if (gameOver) return; // if the game is over, do not move the snake
-
     let head = startPosition[startPosition.length - 1]; // get the last element of the snake array
     let newHead = head; // initialize newHead to the current head position
     // Determine direction based on key pressed
-    let currentPosition = [...snake]; // make a copy of the current snake position
+  const keyPressed = event.key
+  removeSnake(); // remove the snake from the board before moving it
     
-    
-    if (event) {
-        switch (event.keyd) {
-            case 'ArrowUp':
-                currentPosition -= columns; // move up
-                break;
-            case 'ArrowDown':
-                currentPosition += columns; // move down
-                break;
-            case 'ArrowLeft':
-                currentPosition -= 1; // move left
-                break;
-            case 'ArrowRight':
-                currentPosition += 1; // move right
-                break;
+
+    if (keyPressed === 'ArrowUp') {
+                newHead -= columns; // move up
+    }
+    else if (keyPressed === 'ArrowDown') {
+                newHead += columns; // move down
+    }
+    else if (keyPressed === 'ArrowLeft') {
+                newHead -= 1; // move left
+           
+    } else if (keyPressed === 'ArrowRight') {
+                newHead += 1; // move right
         }
-    } else {
+     else {
         // Default movement to the right if no event is provided
         newHead += 1;
     }
-
-    // Check for collisions with walls or self
+    addSnake();
+}
+document.addEventListener('keyup', moveSnake); // listen for keydown events to move the snake
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*Check for collisions with walls or self
     if (
         newHead < 0 || 
         newHead >= cellCount || 
@@ -124,23 +170,37 @@ function moveSnake(event) {
     }
 
     updateBoard(); // Update the board after moving the snake
-    currentPosition = [...snake]; // Update currentPosition to the new snake array
+   
 
 }
-function startGame() {
-    if
+    */function startGame() {
+        addSnake();
+        moveSnake(event)
+        placefoodRdm()
+        moveSnake();
+        
+
+    if(gameOver) {
+        snake = [... startPosition]
+        score = 0 
+        scoreDisplay.textContent = ` score: ${score}`
+        time = 0;
+        TimeDisplay.textContent = `Time: ${time}s`
+        gameOver = false;
+        snakespeed = 100
+        clearInterval(intervalId)
+        clearInterval(timeIntervalId)
+    }
 }
 
 
 
 // Event Listeners
-playButton.addEventListener('click',)
+playButton.addEventListener('click', startGame)
 
 
 console.log(playButton)
 
+
 // on page load 
-createBoard()
-moveSnake() 
-placefoodRdm() 
-updateBoard() 
+init();
