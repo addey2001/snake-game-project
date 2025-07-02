@@ -11,8 +11,8 @@ const startPosition = [188,189,190]
 
 //variables 
 let currentPosition = startPosition
-let sankeLength = 1 
-let snakespeed = 200; // ms per move 
+let snakeLength = 1 
+let snakespeed = 1; // ms per move 
 let foodPosition = null;
 let gameOver = false;
 let time = 0;
@@ -24,6 +24,8 @@ let timeIntervalId = null
 
 //function
 function addSnake() {
+   const cell = cellElements[currentPosition]
+   cell.classList.add('snake') // this adds the class 'snake' to the cell that is currently being used by the snake})
 }
 function createBoard () {
     for( let i = 0; i < cellCount; i++) { // used a loop 
@@ -58,29 +60,87 @@ if (typeof foodPosition === 'number') {
 
 }
 
-function startGame() {
-  
-}
-
 function moveSnake(event) {
-    const keyPressed = event.code
+    if (gameOver) return; // if the game is over, do not move the snake
 
+    let head = startPosition[startPosition.length - 1]; // get the last element of the snake array
+    let newHead = head; // initialize newHead to the current head position
+    // Determine direction based on key pressed
+    let currentPosition = [...snake]; // make a copy of the current snake position
+    
+    
+    if (event) {
+        switch (event.key) {
+            case 'ArrowUp':
+                currentPosition -= columns; // move up
+                break;
+            case 'ArrowDown':
+                currentPosition += columns; // move down
+                break;
+            case 'ArrowLeft':
+                currentPosition -= 1; // move left
+                break;
+            case 'ArrowRight':
+                currentPosition += 1; // move right
+                break;
+        }
+    } else {
+        // Default movement to the right if no event is provided
+        newHead += 1;
     }
 
+    // Check for collisions with walls or self
+    if (
+        newHead < 0 || 
+        newHead >= cellCount || 
+        (newHead % columns === 0 && head % columns === columns - 1) || 
+        (newHead % columns === columns - 1 && head % columns === 0) ||
+        snake.includes(newHead) // check if the new head collides with the snake itself
+    ) {
+        gameOver = true;
+        clearInterval(intervalId);
+        clearInterval(timeIntervalId);
+        alert('Game Over! Your score: ' + score);
+        return;
+    }
+
+    // Add new head to the snake
+    currentPosition.push(newHead);
+    snake.push(newHead);
+
+    // Check for food consumption
+    if (newHead === foodPosition) {
+        score++;
+        scoreDisplay.textContent = `Score: ${score}`;
+        snakeLength++;
+        placefoodRdm(); // Place new food after eating
+    } else {
+        // Remove tail if not eating food
+        const tail = currentPosition.shift();
+        const tailIndex = snake.indexOf(tail);
+        if (tailIndex > -1) {
+            snake.splice(tailIndex, 1);
+        }
+    }
+
+    updateBoard(); // Update the board after moving the snake
+    currentPosition = [...snake]; // Update currentPosition to the new snake array
+
+}
+function startGame() {
+    if
+}
 
 
 
+// Event Listeners
+playButton.addEventListener('click',)
 
-
-
-
-
-
-
-playButton.addEventListener('click', startGame)
 
 console.log(playButton)
 
 // on page load 
 createBoard()
-addSnake()
+moveSnake() 
+placefoodRdm() 
+updateBoard() 
