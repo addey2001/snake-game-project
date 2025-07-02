@@ -70,7 +70,7 @@ function moveSnake(event) {
     
     
     if (event) {
-        switch (event.key) {
+        switch (event.keyd) {
             case 'ArrowUp':
                 currentPosition -= columns; // move up
                 break;
